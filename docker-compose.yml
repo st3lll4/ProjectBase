@@ -1,0 +1,23 @@
+services:
+  postgres:
+    container_name: "project_base"
+    image: postgres 
+    command: postgres -c 'max_connections=1000'
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=base
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./pg-dump:/var/lib/postgresql/dump
+
+volumes: 
+    postgres-data: 
+      
+networks:
+  default:
+    name: infra
